@@ -7,6 +7,7 @@
     <meta name="description" content="Web-to-Design System Inspector - Extract design tokens from any website">
     <title>Design Token Inspector | Web-to-Design System Tool</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="features.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -77,17 +78,6 @@
                     </button>
                 </div>
             </div>
-
-            <div class="header-stats" id="headerStats">
-                <div class="stat-item">
-                    <span class="stat-value">0</span>
-                    <span class="stat-label">Tokens</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value">0</span>
-                    <span class="stat-label">Elements</span>
-                </div>
-            </div>
         </div>
     </header>
 
@@ -134,15 +124,42 @@
                 </div>
             </div>
 
-            <!-- Category Tabs -->
-            <div class="category-tabs" id="categoryTabs">
-                <button class="tab-btn active" data-category="all">All Tokens</button>
-                <button class="tab-btn" data-category="colors">Colors</button>
-                <button class="tab-btn" data-category="typography">Typography</button>
-                <button class="tab-btn" data-category="spacing">Spacing</button>
-                <button class="tab-btn" data-category="assets">Assets</button>
-                <button class="tab-btn" data-category="effects">Effects</button>
-                <button class="tab-btn" data-category="motion">Motion</button>
+            <!-- Category Tabs with Stats -->
+            <div class="tabs-container">
+                <div class="category-tabs" id="categoryTabs">
+                    <button class="tab-btn active" data-category="all">All Tokens</button>
+                    <button class="tab-btn" data-category="colors">Colors</button>
+                    <button class="tab-btn" data-category="typography">Typography</button>
+                    <button class="tab-btn" data-category="spacing">Spacing</button>
+                    <button class="tab-btn" data-category="assets">Assets</button>
+                    <button class="tab-btn" data-category="effects">Effects</button>
+                    <button class="tab-btn" data-category="motion">Motion</button>
+                </div>
+
+                <!-- Stats moved here -->
+                <div class="dashboard-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="tokenCount">0</div>
+                        <div class="stat-label">Tokens</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="elementCount">0</div>
+                        <div class="stat-label">Elements</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asset Download Controls (hidden by default, shown when on assets tab) -->
+            <div class="asset-controls hidden" id="assetControls">
+                <div class="asset-filters">
+                    <span class="filter-label">Download:</span>
+                    <button class="btn-filter" data-filter="all">All</button>
+                    <button class="btn-filter" data-filter="icons">Icons Only</button>
+                    <button class="btn-filter" data-filter="jpg">JPG</button>
+                    <button class="btn-filter" data-filter="png">PNG</button>
+                    <button class="btn-filter" data-filter="svg">SVG</button>
+                    <button class="btn-filter" data-filter="other">Other</button>
+                </div>
             </div>
 
             <!-- Token Grid -->
