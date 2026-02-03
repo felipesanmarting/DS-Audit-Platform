@@ -1,0 +1,102 @@
+{
+  "colors": {
+    "color-background-0a0e1a": {
+      "$value": "rgb(10, 14, 26)",
+      "$type": "color",
+      "$description": "background token extracted from page"
+    },
+    "color-background-141824": {
+      "$value": "rgb(20, 24, 36)",
+      "$type": "color",
+      "$description": "background token extracted from page"
+    },
+    "color-text-e4e7eb": {
+      "$value": "rgb(228, 231, 235)",
+      "$type": "color",
+      "$description": "text token extracted from page"
+    },
+    "color-border-2a3142": {
+      "$value": "rgb(42, 49, 66)",
+      "$type": "color",
+      "$description": "border token extracted from page"
+    }
+  },
+  "typography": {
+    "font-size-16px": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "font-size token extracted from page"
+    },
+    "font-size-14px": {
+      "$value": "14px",
+      "$type": "dimension",
+      "$description": "font-size token extracted from page"
+    },
+    "font-family-inter": {
+      "$value": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+      "$type": "fontFamily",
+      "$description": "font-family token extracted from page"
+    },
+    "font-weight-normal": {
+      "$value": "400",
+      "$type": "fontWeight",
+      "$description": "font-weight token extracted from page"
+    },
+    "font-weight-medium": {
+      "$value": "500",
+      "$type": "fontWeight",
+      "$description": "font-weight token extracted from page"
+    },
+    "font-weight-semibold": {
+      "$value": "600",
+      "$type": "fontWeight",
+      "$description": "font-weight token extracted from page"
+    },
+    "font-weight-bold": {
+      "$value": "700",
+      "$type": "fontWeight",
+      "$description": "font-weight token extracted from page"
+    }
+  },
+  "spacing": {
+    "padding-top-1rem": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "padding token extracted from page"
+    },
+    "margin-bottom-1-5rem": {
+      "$value": "24px",
+      "$type": "dimension",
+      "$description": "margin token extracted from page"
+    },
+    "radius-0-5rem": {
+      "$value": "8px",
+      "$type": "dimension",
+      "$description": "border-radius token extracted from page"
+    },
+    "radius-0-75rem": {
+      "$value": "12px",
+      "$type": "dimension",
+      "$description": "border-radius token extracted from page"
+    }
+  },
+  "effects": {
+    "shadow": {
+      "$value": "0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)",
+      "$type": "shadow",
+      "$description": "box-shadow token extracted from page"
+    }
+  },
+  "motion": {
+    "duration-250ms": {
+      "$value": "0.25s",
+      "$type": "duration",
+      "$description": "transition-duration token extracted from page"
+    },
+    "timing-function": {
+      "$value": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "$type": "string",
+      "$description": "transition-timing-function token extracted from page"
+    }
+  }
+}
