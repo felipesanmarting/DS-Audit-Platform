@@ -149,12 +149,19 @@ async function analyzeExternalURL() {
 
     // Normalize URL - add https:// if no protocol specified
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        // Check if starts with www. or is a domain
+        // Check if starts with www. or is a domain pattern
         if (url.startsWith('www.') || /^[a-zA-Z0-9][a-zA-Z0-9-]*\.[a-zA-Z]{2,}/.test(url)) {
             url = 'https://' + url;
-            DOM.urlInput.value = url; // Update input field
         }
     }
+
+    // Force HTTPS instead of HTTP (Mixed Content fix)
+    if (url.startsWith('http://')) {
+        url = url.replace('http://', 'https://');
+    }
+
+    // Update input field with normalized URL
+    DOM.urlInput.value = url;
 
     // Attempt to load favicon
     try {
