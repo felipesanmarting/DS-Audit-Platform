@@ -141,6 +141,9 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     transition: background var(--transition-normal), color var(--transition-normal);
+    /* Sticky footer layout */
+    display: flex;
+    flex-direction: column;
 }
 
 /* ================================================
@@ -376,6 +379,8 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: var(--spacing-2xl);
+    flex: 1;
+    /* Grow to fill available space, pushing footer to bottom */
 }
 
 /* ================================================
@@ -1209,8 +1214,11 @@ body {
     background: var(--color-bg-elevated);
     border-top: 1px solid var(--color-border-default);
     padding: var(--spacing-xl) var(--spacing-2xl);
-    margin-top: var(--spacing-3xl);
+    margin-top: auto;
+    /* Push to bottom using flexbox */
     text-align: center;
+    flex-shrink: 0;
+    /* Prevent footer from shrinking */
 }
 
 .footer-content {
