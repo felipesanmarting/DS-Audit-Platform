@@ -1189,11 +1189,27 @@ function mapToFigmaType(type, category) {
 /**
  * Clear all tokens
  */
+/**
+ * Clear all tokens and reset application state
+ */
 function clearTokens() {
     if (confirm('Are you sure you want to clear all extracted tokens?')) {
+        // Reset functional state
         resetTokens();
+
+        // Clear inputs
+        if (DOM.urlInput) DOM.urlInput.value = '';
+
+        // Hide and reset favicon
+        const faviconImg = document.getElementById('targetFavicon');
+        const faviconContainer = document.getElementById('faviconContainer');
+        if (faviconImg) faviconImg.src = '';
+        if (faviconContainer) faviconContainer.style.display = 'none';
+
+        // Clear results UI
         DOM.tokenGrid.innerHTML = '';
         DOM.dashboardSection.style.display = 'none';
+
         updateStats();
     }
 }
