@@ -387,7 +387,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 👨‍💻 Author
 
-Created by [Your Name]
+Created by Felipe San Martín G . [holafelipe.cl]
 
 ## 🙏 Acknowledgments
 
