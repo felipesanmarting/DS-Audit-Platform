@@ -182,7 +182,8 @@ async function analyzeExternalURL() {
     // List of CORS proxy services to try as fallback
     const corsProxies = [
         'https://api.allorigins.win/raw?url=',
-        'https://corsproxy.io/?'
+        'https://corsproxy.io/?',
+        'https://api.codetabs.com/v1/proxy?quest='
     ];
 
     let lastError = null;
@@ -193,10 +194,20 @@ async function analyzeExternalURL() {
 
     for (const fetchUrl of attemptUrls) {
         try {
-            console.log(`🔄 Attempting to fetch: ${currentAttempt === 0 ? 'Direct' : 'Via proxy'}...`);
+            console.log(`🔄 Attempting to fetch: ${currentAttempt === 0 ? 'Direct' : 'Via proxy ' + currentAttempt}...`);
 
-            // Fetch the HTML
-            const response = await fetch(fetchUrl);
+            // Fetch the HTML with timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
+            const response = await fetch(fetchUrl, {
+                signal: controller.signal,
+                headers: {
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                }
+            });
+
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -234,11 +245,14 @@ async function analyzeExternalURL() {
                 }
             });
 
+            // Give a moment for styles to be applied
+            await new Promise(resolve => setTimeout(resolve, 500));
+
             // Reset state
             resetTokens();
 
-            // Extract tokens from iframe content
-            const tokens = await extractDesignTokens(iframe.contentDocument.body, iframe.contentWindow);
+            // Extract tokens from the iframe document
+            const tokens = await extractDesignTokens(iframe.contentDocument, iframe.contentWindow);
 
             // Clean up iframe
             document.body.removeChild(iframe);
@@ -289,12 +303,16 @@ async function analyzeExternalURL() {
     showLoading(false);
 
     // Show user-friendly error message
-    if (lastError.name === 'TypeError' && lastError.message.includes('Failed to fetch')) {
-        alert(t('corsErrorAllProxiesFailed') ||
-            'No se pudo acceder a la URL después de intentar con múltiples métodos. Verifica que la URL sea correcta y esté accesible.');
-    } else {
-        alert(`Error: ${lastError.message}`);
-    }
+    const errorMsg = `⚠️ No se pudo acceder a "${url}"
+
+Este sitio tiene protección anti-bot (Cloudflare) que bloquea el análisis remoto.
+
+Soluciones:
+1. Prueba con otro sitio (ej: wikipedia.org, github.com)
+2. Abre el sitio directamente y usa las DevTools del navegador
+3. Algunos sitios simplemente no permiten acceso externo`;
+
+    alert(errorMsg);
 }
 
 /**
