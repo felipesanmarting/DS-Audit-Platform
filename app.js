@@ -16,7 +16,7 @@ window.AppState = {
         motion: new Set()
     },
     tokenData: [],
-    currentCategory: 'all',
+    currentCategory: 'colors',
     analyzedElements: 0,
     currentLanguage: localStorage.getItem('language') || 'es',  // Default to Spanish
     currentTheme: localStorage.getItem('theme') || 'dark'       // Default to dark
@@ -130,17 +130,30 @@ function attachEventListeners() {
 
     // Theme toggle
     document.getElementById('themeToggle')?.addEventListener('click', handleThemeToggle);
+
+    // Download buttons
+    document.getElementById('downloadCategoryBtn')?.addEventListener('click', downloadCurrentCategory);
+    document.getElementById('downloadAllBtn')?.addEventListener('click', downloadAllTokens);
 }
 
 /**
  * Analyze an external URL with automatic CORS proxy fallback
  */
 async function analyzeExternalURL() {
-    const url = DOM.urlInput.value.trim();
+    let url = DOM.urlInput.value.trim();
 
     if (!url) {
         alert(t('pleaseEnterURL'));
         return;
+    }
+
+    // Normalize URL - add https:// if no protocol specified
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        // Check if starts with www. or is a domain
+        if (url.startsWith('www.') || /^[a-zA-Z0-9][a-zA-Z0-9-]*\.[a-zA-Z]{2,}/.test(url)) {
+            url = 'https://' + url;
+            DOM.urlInput.value = url; // Update input field
+        }
     }
 
     // Attempt to load favicon
@@ -1223,6 +1236,67 @@ function downloadFile(content, filename, mimeType) {
     URL.revokeObjectURL(url);
 
     console.log(`📥 Downloaded: ${filename}`);
+}
+
+/**
+ * Download current category tokens as JSON
+ */
+function downloadCurrentCategory() {
+    const category = AppState.currentCategory;
+    const tokens = AppState.tokenData[category] || [];
+
+    if (tokens.length === 0) {
+        alert('No tokens in current category to download.');
+        return;
+    }
+
+    const exportData = {
+        category: category,
+        count: tokens.length,
+        tokens: tokens.map(t => ({
+            name: t.name,
+            value: t.value,
+            type: t.type,
+            category: t.category
+        }))
+    };
+
+    const content = JSON.stringify(exportData, null, 2);
+    downloadFile(content, `${category}-tokens.json`, 'application/json');
+}
+
+/**
+ * Download all tokens as JSON
+ */
+function downloadAllTokens() {
+    const allTokens = {};
+    let totalCount = 0;
+
+    Object.keys(AppState.tokenData).forEach(type => {
+        const tokens = AppState.tokenData[type];
+        if (Array.isArray(tokens) && tokens.length > 0) {
+            allTokens[type] = tokens.map(t => ({
+                name: t.name,
+                value: t.value,
+                type: t.type,
+                category: t.category
+            }));
+            totalCount += tokens.length;
+        }
+    });
+
+    if (totalCount === 0) {
+        alert('No tokens to download. Please analyze a page first.');
+        return;
+    }
+
+    const exportData = {
+        totalCount: totalCount,
+        tokens: allTokens
+    };
+
+    const content = JSON.stringify(exportData, null, 2);
+    downloadFile(content, 'all-design-tokens.json', 'application/json');
 }
 
 /**

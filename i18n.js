@@ -12,7 +12,7 @@ const translations = {
         elements: 'Elementos',
 
         // Main Title
-        appTitle: 'Inspector de Tokens de Diseño',
+        appTitle: 'Auditoría de tokens',
         appTagline: 'Extrae, Analiza y Exporta Sistemas de Diseño',
 
         // Input Section
@@ -27,7 +27,7 @@ const translations = {
 
         // URL Mode
         corsWarning: 'Pueden aplicarse restricciones CORS. Usa un proxy o bookmarklet para sitios externos.',
-        targetURL: 'URL de Destino',
+        targetURL: 'Ingresa URL de destino',
         corsProxy: 'Proxy CORS (opcional)',
         analyzeURLBtn: 'Analizar URL',
 
@@ -44,13 +44,12 @@ const translations = {
         exportBtn: 'Exportar Tokens',
 
         // Category Tabs
-        allTokens: 'Todos los Tokens',
-        colors: 'Colores',
-        typography: 'Tipografía',
-        spacing: 'Espaciado',
-        assets: 'Recursos',
-        effects: 'Efectos',
-        motion: 'Movimiento',
+        colors: 'Colors',
+        typography: 'Typography',
+        spacing: 'Spacing',
+        assets: 'Assets',
+        effects: 'Shadows',
+        motion: 'Motion',
 
         // Export Modal
         exportTitle: 'Exportar Tokens de Diseño',
@@ -111,7 +110,7 @@ const translations = {
         elements: 'Elements',
 
         // Main Title
-        appTitle: 'Design Token Inspector',
+        appTitle: 'Token Audit',
         appTagline: 'Extract, Analyze, Export Design Systems',
 
         // Input Section
@@ -126,7 +125,7 @@ const translations = {
 
         // URL Mode
         corsWarning: 'CORS restrictions may apply. Use a proxy or bookmarklet for external sites.',
-        targetURL: 'Target URL',
+        targetURL: 'Enter target URL',
         corsProxy: 'CORS Proxy (optional)',
         analyzeURLBtn: 'Analyze URL',
 
@@ -143,12 +142,11 @@ const translations = {
         exportBtn: 'Export Tokens',
 
         // Category Tabs
-        allTokens: 'All Tokens',
         colors: 'Colors',
         typography: 'Typography',
         spacing: 'Spacing',
         assets: 'Assets',
-        effects: 'Effects',
+        effects: 'Shadows',
         motion: 'Motion',
 
         // Export Modal

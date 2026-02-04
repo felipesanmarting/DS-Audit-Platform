@@ -509,10 +509,24 @@ function createDOMTokenPreview(token) {
 
         preview.appendChild(effectDemo);
     } else if (token.type === 'motion') {
-        const motionIcon = document.createElement('div');
-        motionIcon.innerHTML = '⚡';
-        motionIcon.style.fontSize = '1.2rem';
-        preview.appendChild(motionIcon);
+        const motionDemo = document.createElement('div');
+        motionDemo.className = 'motion-preview-mini';
+        motionDemo.style.cssText = `
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
+            border-radius: 4px;
+            animation: motionPreviewBounce 1.5s ease-in-out infinite;
+        `;
+
+        // Apply the actual motion value if it's a duration or timing
+        if (token.category && token.category.includes('duration')) {
+            motionDemo.style.animationDuration = token.value;
+        } else if (token.category && token.category.includes('timing')) {
+            motionDemo.style.animationTimingFunction = token.value;
+        }
+
+        preview.appendChild(motionDemo);
     } else {
         // Fallback for unknown token types
         const fallback = document.createElement('div');

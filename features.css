@@ -452,12 +452,30 @@
     }
 }
 
-/* Asset Grid Layout (Smaller Compact Cards) */
+/* Asset Grid Layout (5 cards per row) */
 .asset-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--spacing-md);
     width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .asset-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .asset-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .asset-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .asset-card {
@@ -573,4 +591,71 @@
     display: inline-block;
     color: var(--color-text-primary);
     line-height: 1;
+}
+
+/* Motion Preview Animation */
+@keyframes motionPreviewBounce {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(15px);
+    }
+}
+
+.motion-preview-mini {
+    animation: motionPreviewBounce 1.5s ease-in-out infinite;
+}
+
+/* Download Controls */
+.download-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.download-controls .download-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+}
+
+.download-controls .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-accent-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.download-controls .btn-download:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+}
+
+.download-controls .btn-download-secondary {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-default);
+}
+
+.download-controls .btn-download-secondary:hover {
+    background: var(--color-bg-tertiary);
+    border-color: var(--color-accent-primary);
 }

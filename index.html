@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Web-to-Design System Inspector - Extract design tokens from any website">
-    <title>Design Token Inspector | Web-to-Design System Tool</title>
+    <title>Auditoría de Tokens | Web-to-Design System Tool</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="features.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,8 +47,8 @@
                     </svg>
                 </div>
                 <div class="logo-text">
-                    <h1>Design Token Inspector</h1>
-                    <p class="tagline">Extract, Analyze, Export Design Systems</p>
+                    <h1>Auditoría de tokens</h1>
+                    <p class="tagline">Extrae, Analiza y Exporta Sistemas de Diseño</p>
                 </div>
             </div>
 
@@ -86,12 +86,9 @@
         <!-- Input Section -->
         <section class="input-section">
             <div class="input-card">
-                <div class="input-header">
-                    <h2>Target Configuration</h2>
-                </div>
 
                 <div class="input-group">
-                    <label for="urlInput">Target URL</label>
+                    <label for="urlInput">Ingresa URL de destino</label>
                     <div class="input-with-button">
                         <div class="favicon-container" id="faviconContainer" style="display: none;">
                             <img id="targetFavicon" src="" alt="Favicon" width="20" height="20">
@@ -109,7 +106,6 @@
                 </div>
 
                 <div class="extraction-options">
-                    <span class="options-label">Extract:</span>
                     <div class="checkbox-group">
                         <label class="checkbox-label">
                             <input type="checkbox" name="extractType" value="colors" checked>
@@ -163,12 +159,11 @@
             <!-- Category Tabs with Stats -->
             <div class="tabs-container">
                 <div class="category-tabs" id="categoryTabs">
-                    <button class="tab-btn active" data-category="all">All Tokens</button>
-                    <button class="tab-btn" data-category="colors">Colors</button>
+                    <button class="tab-btn active" data-category="colors">Colors</button>
                     <button class="tab-btn" data-category="typography">Typography</button>
                     <button class="tab-btn" data-category="spacing">Spacing</button>
                     <button class="tab-btn" data-category="assets">Assets</button>
-                    <button class="tab-btn" data-category="effects">Effects</button>
+                    <button class="tab-btn" data-category="effects">Shadows</button>
                     <button class="tab-btn" data-category="motion">Motion</button>
                 </div>
 
@@ -185,10 +180,27 @@
                 </div>
             </div>
 
+            <!-- Download Controls -->
+            <div class="download-controls" id="downloadControls">
+                <span class="download-label">Download:</span>
+                <button class="btn-download btn-download-secondary" id="downloadCategoryBtn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 1v8l3-3 1 1-5 5-5-5 1-1 3 3V1h2zm-6 13h12v1H2v-1z" />
+                    </svg>
+                    Current Category
+                </button>
+                <button class="btn-download" id="downloadAllBtn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 1v8l3-3 1 1-5 5-5-5 1-1 3 3V1h2zm-6 13h12v1H2v-1z" />
+                    </svg>
+                    All Tokens
+                </button>
+            </div>
+
             <!-- Asset Download Controls (hidden by default, shown when on assets tab) -->
             <div class="asset-controls hidden" id="assetControls">
                 <div class="asset-filters">
-                    <span class="filter-label">Download:</span>
+                    <span class="filter-label">Filter:</span>
                     <button class="btn-filter" data-filter="all">All</button>
                     <button class="btn-filter" data-filter="icons">Icons Only</button>
                     <button class="btn-filter" data-filter="jpg">JPG</button>
