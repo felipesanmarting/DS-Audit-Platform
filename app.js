@@ -190,8 +190,9 @@ async function analyzeExternalURL() {
     // List of CORS proxy services to try as fallback
     const corsProxies = [
         'https://api.allorigins.win/raw?url=',
-        'https://corsproxy.io/?',
-        'https://api.codetabs.com/v1/proxy?quest='
+        'https://thingproxy.freeboard.io/fetch/',
+        'https://api.codetabs.com/v1/proxy?quest=',
+        'https://corsproxy.io/?'
     ];
 
     let lastError = null;
@@ -1203,13 +1204,14 @@ function clearTokens() {
 function resetTokens() {
     AppState.tokenData = [];
     AppState.analyzedElements = 0;
-    AppState.currentCategory = 'all';
+    AppState.currentCategory = 'colors';
 
     // Reset category tab
     DOM.categoryTabs.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    DOM.categoryTabs.querySelector('[data-category="all"]').classList.add('active');
+    const colorsTab = DOM.categoryTabs.querySelector('[data-category="colors"]');
+    if (colorsTab) colorsTab.classList.add('active');
 }
 
 /**
