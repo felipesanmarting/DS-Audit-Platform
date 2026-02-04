@@ -150,125 +150,61 @@ body {
    HEADER SECTION
    ================================================ */
 
-.app-header {
-    background: var(--color-bg-elevated);
-    border-bottom: 1px solid var(--color-border-default);
-    padding: var(--spacing-lg) var(--spacing-xl);
-    position: sticky;
-    top: 0;
-    z-index: var(--z-header);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-md);
-}
+/* ================================================
+   HERO SECTION (Centered Header)
+   ================================================ */
 
-.header-content {
-    max-width: 1400px;
-    margin: 0 auto;
+.hero-section {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: var(--spacing-xl);
+    justify-content: center;
+    margin-top: var(--spacing-3xl);
+    margin-bottom: var(--spacing-2xl);
+    text-align: center;
+    gap: var(--spacing-lg);
 }
 
-.logo-section {
+.hero-logo-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: var(--spacing-md);
 }
 
-.logo-icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-bg-secondary);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-sm);
-    box-shadow: var(--shadow-md);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+.hero-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--spacing-sm);
 }
 
-.logo-icon:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
-}
-
-.logo-text h1 {
-    font-size: var(--font-size-2xl);
+.hero-text-content h1 {
+    font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-bold);
     background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin-bottom: var(--spacing-xs);
+    line-height: var(--line-height-tight);
 }
 
 .tagline {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-lg);
     color: var(--color-text-secondary);
     font-weight: var(--font-weight-medium);
 }
 
-.header-stats {
+.hero-controls {
     display: flex;
-    gap: var(--spacing-xl);
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
+    gap: var(--spacing-md);
     align-items: center;
-    padding: var(--spacing-md) var(--spacing-lg);
-    background: var(--color-bg-secondary);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border-default);
-    min-width: 100px;
-    transition: all var(--transition-normal);
+    margin-top: var(--spacing-sm);
 }
 
-.stat-item:hover {
-    border-color: var(--color-border-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.stat-value {
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    background: linear-gradient(135deg, var(--color-accent-info), var(--color-accent-success));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.stat-label {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-top: var(--spacing-xs);
-}
-
-/* Header Controls */
-.header-controls {
+.hero-control-group {
     display: flex;
-    gap: var(--spacing-lg);
     align-items: center;
-}
-
-.control-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-}
-
-.control-label {
-    font-size: var(--font-size-xs);
-    color: var(--color-text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: var(--font-weight-medium);
 }
 
 /* Language Toggle */
@@ -398,6 +334,24 @@ body {
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-lg);
     transition: all var(--transition-normal);
+}
+
+/* Centered Input Card Modification */
+.input-card.centered-card {
+    width: 70%;
+    margin: 0 auto;
+    max-width: 900px;
+    min-width: 320px;
+}
+
+@media (max-width: 768px) {
+    .input-card.centered-card {
+        width: 100%;
+    }
+
+    .hero-text-content h1 {
+        font-size: var(--font-size-2xl);
+    }
 }
 
 .input-card:hover {
@@ -702,50 +656,78 @@ body {
 .checkbox-group {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
+    justify-content: center;
+    /* Center the chips */
 }
 
+/* Modern Chip Checkbox Style */
 .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
+    position: relative;
     cursor: pointer;
     user-select: none;
 }
 
+/* Hide default checkbox */
 .checkbox-label input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
-    background: var(--color-bg-secondary);
+    position: absolute;
+    opacity: 0;
     cursor: pointer;
-    position: relative;
-    transition: all var(--transition-fast);
+    height: 0;
+    width: 0;
 }
 
-.checkbox-label input[type="checkbox"]:checked {
+/* Custom Chip Styling */
+.checkbox-text {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Hover State */
+.checkbox-label:hover .checkbox-text {
+    background: var(--color-bg-hover);
+    border-color: var(--color-border-hover);
+    color: var(--color-text-primary);
+    transform: translateY(-1px);
+}
+
+/* Checked State */
+.checkbox-label input[type="checkbox"]:checked~.checkbox-text {
     background: var(--color-accent-primary);
     border-color: var(--color-accent-primary);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
+    /* Blue glow */
 }
 
-.checkbox-label input[type="checkbox"]:checked::after {
+/* Add checkmark icon using ::before */
+.checkbox-text::before {
     content: '';
-    position: absolute;
-    left: 5px;
-    top: 2px;
-    width: 4px;
-    height: 8px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+    display: inline-block;
+    width: 0;
+    height: 16px;
+    margin-right: 0;
+    transition: all var(--transition-fast);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
 }
 
-.checkbox-text {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-primary);
+.checkbox-label input[type="checkbox"]:checked~.checkbox-text::before {
+    width: 16px;
+    margin-right: 6px;
+    opacity: 1;
 }
 
 /* ================================================

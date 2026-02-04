@@ -16,12 +16,14 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="app-header">
-        <div class="header-content">
-            <div class="logo-section">
-                <div class="logo-icon">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main Container -->
+    <main class="app-container">
+
+        <!-- Hero Section (formerly Header) -->
+        <div class="hero-section">
+            <div class="hero-logo-container">
+                <div class="logo-icon hero-icon">
+                    <svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="4" y="4" width="10" height="10" rx="2" fill="url(#grad1)" />
                         <rect x="18" y="4" width="10" height="10" rx="2" fill="url(#grad2)" />
                         <rect x="4" y="18" width="10" height="10" rx="2" fill="url(#grad3)" />
@@ -46,17 +48,15 @@
                         </defs>
                     </svg>
                 </div>
-                <div class="logo-text">
+                <div class="hero-text-content">
                     <h1>Auditoría de tokens</h1>
                     <p class="tagline">Extrae, Analiza y Exporta Sistemas de Diseño</p>
                 </div>
             </div>
 
-            <!-- Header Controls -->
-            <div class="header-controls">
+            <div class="hero-controls">
                 <!-- Language Toggle -->
-                <div class="control-group">
-                    <label class="control-label" data-i18n="language">Language</label>
+                <div class="hero-control-group">
                     <div class="language-toggle">
                         <button class="lang-btn active" data-lang="es">ES</button>
                         <button class="lang-btn" data-lang="en">EN</button>
@@ -64,8 +64,7 @@
                 </div>
 
                 <!-- Theme Toggle -->
-                <div class="control-group">
-                    <label class="control-label" data-i18n="theme">Theme</label>
+                <div class="hero-control-group">
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                         <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                             <path
@@ -79,13 +78,10 @@
                 </div>
             </div>
         </div>
-    </header>
 
-    <!-- Main Container -->
-    <main class="app-container">
         <!-- Input Section -->
         <section class="input-section">
-            <div class="input-card">
+            <div class="input-card centered-card">
 
                 <div class="input-group">
                     <label for="urlInput">Ingresa URL de destino</label>
