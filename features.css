@@ -6,7 +6,7 @@
 .tabs-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
     flex-wrap: wrap;
@@ -31,11 +31,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--spacing-sm) var(--spacing-md);
+    justify-content: center;
+    padding: 0 var(--spacing-lg);
     background: var(--color-bg-secondary);
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border-default);
-    min-width: 80px;
+    min-width: 100px;
+    height: 100%;
     transition: all var(--transition-normal);
 }
 
@@ -136,7 +138,8 @@
     transform: scale(0.95);
 }
 
-.token-copy-btn svg {
+.token-copy-btn svg,
+.token-copy-btn i {
     width: 14px;
     height: 14px;
 }
@@ -216,6 +219,136 @@
     text-transform: capitalize;
 }
 
+/* Override Grid for Table Layout */
+.token-grid:has(.token-table),
+.token-grid:has(.token-group) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    grid-template-columns: none;
+}
+
+
+/* ================================================
+   TOKEN TABLE STYLES
+   ================================================ */
+
+.token-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border-default);
+}
+
+.token-table thead {
+    background: var(--color-bg-secondary);
+    border-bottom: 2px solid var(--color-border-default);
+}
+
+.token-table thead th {
+    padding: var(--spacing-md) var(--spacing-lg);
+    text-align: left;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.token-table thead th:first-child {
+    width: 100px;
+    text-align: center;
+}
+
+.token-table thead th:last-child {
+    width: 80px;
+    text-align: center;
+}
+
+.token-table tbody tr {
+    border-bottom: 1px solid var(--color-border-default);
+    transition: all var(--transition-fast);
+}
+
+.token-table tbody tr:hover {
+    background: var(--color-bg-hover);
+}
+
+.token-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.token-table tbody td {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+}
+
+.token-preview-cell {
+    text-align: center;
+    width: 100px;
+}
+
+.token-name-cell {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-mono);
+}
+
+.token-value-cell {
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+}
+
+.token-copy-cell {
+    text-align: center;
+    width: 80px;
+}
+
+/* Token Preview Mini Styles */
+.token-preview-mini {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+}
+
+.color-swatch-mini {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--color-border-default);
+    box-shadow: var(--shadow-sm);
+}
+
+.typography-specimen-mini {
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+}
+
+.spacing-visual-mini {
+    background: var(--color-accent-primary);
+    border-radius: 2px;
+    opacity: 0.8;
+}
+
+.asset-preview-mini {
+    max-width: 60px;
+    max-height: 40px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+}
+
+.effect-demo-mini {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+}
+
 /* Motion Animation Demo */
 .motion-demo {
     position: relative;
@@ -267,6 +400,13 @@
     pointer-events: none;
 }
 
+/* Effects Demo */
+.effect-demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Responsive Adjustments for New Features */
 @media (max-width: 768px) {
     .tabs-container {
@@ -282,4 +422,155 @@
     .asset-filters {
         justify-content: center;
     }
+
+    /* Responsive table adjustments */
+    .token-table {
+        font-size: var(--font-size-xs);
+    }
+
+    .token-table thead th,
+    .token-table tbody td {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .token-preview-cell {
+        width: 60px;
+    }
+
+    .token-copy-cell {
+        width: 60px;
+    }
+
+    .color-swatch-mini {
+        width: 30px;
+        height: 30px;
+    }
+
+    .asset-preview-mini {
+        max-width: 40px;
+        max-height: 30px;
+    }
+}
+
+/* Asset Grid Layout (Smaller Compact Cards) */
+.asset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+.asset-card {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transition: all var(--transition-normal);
+}
+
+.asset-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-accent-primary);
+    z-index: 2;
+}
+
+.asset-preview-container {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-secondary);
+    /* Use a checkered pattern for transparency */
+    background-image:
+        linear-gradient(45deg, #ccc 25%, transparent 25%),
+        linear-gradient(-45deg, #ccc 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ccc 75%),
+        linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-sm);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--color-border-default);
+}
+
+/* Ensure background color for dark mode to see checkered pattern only if needed, or overlay */
+[data-theme="dark"] .asset-preview-container {
+    background-color: #2a2a2a;
+    background-image: none;
+    /* Simplify for dark mode usually */
+}
+
+/* Or simpler background */
+.asset-preview-container {
+    background: var(--color-bg-tertiary);
+    background-image: none;
+}
+
+.asset-preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.asset-info {
+    width: 100%;
+    text-align: center;
+}
+
+.asset-name {
+    font-size: 11px;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: var(--font-weight-medium);
+}
+
+.asset-meta {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+/* Font Download Button Styles */
+.font-download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--color-accent-primary);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-sm);
+    margin-left: var(--spacing-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.font-download-btn:hover {
+    background: var(--color-accent-primary);
+    color: white;
+}
+
+/* Ensure table previews are visible */
+.token-preview-cell {
+    width: 80px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.typography-specimen-mini {
+    display: inline-block;
+    color: var(--color-text-primary);
+    line-height: 1;
 }

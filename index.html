@@ -92,15 +92,51 @@
 
                 <div class="input-group">
                     <label for="urlInput">Target URL</label>
-                    <input type="url" id="urlInput" class="input-field" placeholder="https://example.com"
-                        spellcheck="false" />
+                    <div class="input-with-button">
+                        <div class="favicon-container" id="faviconContainer" style="display: none;">
+                            <img id="targetFavicon" src="" alt="Favicon" width="20" height="20">
+                        </div>
+                        <input type="url" id="urlInput" class="input-field" placeholder="https://example.com"
+                            spellcheck="false" />
+                        <button class="btn-icon-inline" id="analyzeUrlBtn" title="Analyze URL">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <button class="btn btn-primary btn-large" id="analyzeUrlBtn">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M3 3h14a1 1 0 011 1v12a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v10h12V5H4z" />
-                    </svg>
-                    Analyze URL
-                </button>
+
+                <div class="extraction-options">
+                    <span class="options-label">Extract:</span>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="extractType" value="colors" checked>
+                            <span class="checkbox-text">Colors</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="extractType" value="typography" checked>
+                            <span class="checkbox-text">Typography</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="extractType" value="spacing" checked>
+                            <span class="checkbox-text">Spacing</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="extractType" value="assets" checked>
+                            <span class="checkbox-text">Assets</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="extractType" value="effects" checked>
+                            <span class="checkbox-text">Box Shadow</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="extractType" value="motion" checked>
+                            <span class="checkbox-text">Motion</span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -217,7 +253,11 @@
         </div>
     </main>
 
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <script src="i18n.js"></script>
+    <script src="features.js"></script>
     <script src="app.js"></script>
 </body>
 

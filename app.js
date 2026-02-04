@@ -6,7 +6,7 @@
 /**
  * Global State Management
  */
-const AppState = {
+window.AppState = {
     extractedTokens: {
         colors: new Set(),
         typography: new Set(),
@@ -21,6 +21,9 @@ const AppState = {
     currentLanguage: localStorage.getItem('language') || 'es',  // Default to Spanish
     currentTheme: localStorage.getItem('theme') || 'dark'       // Default to dark
 };
+
+// Local alias for convenience
+const AppState = window.AppState;
 
 /**
  * DOM Element Cache
@@ -57,6 +60,12 @@ function init() {
     attachEventListeners();
     initializeLanguage();
     initializeTheme();
+
+    // Initialize enhanced features if available
+    if (window.EnhancedFeatures && window.EnhancedFeatures.attachEnhancedEventListeners) {
+        window.EnhancedFeatures.attachEnhancedEventListeners();
+    }
+
     console.log('🎨 Design Token Inspector initialized');
 }
 
@@ -134,6 +143,20 @@ async function analyzeExternalURL() {
         return;
     }
 
+    // Attempt to load favicon
+    try {
+        const urlObj = new URL(url);
+        const faviconUrl = `https://www.google.com/s2/favicons?domain=${urlObj.hostname}&sz=64`;
+        const faviconImg = document.getElementById('targetFavicon');
+        const faviconContainer = document.getElementById('faviconContainer');
+        if (faviconImg && faviconContainer) {
+            faviconImg.src = faviconUrl;
+            faviconContainer.style.display = 'flex';
+        }
+    } catch (e) {
+        // invalid url, will fail later
+    }
+
     showLoading(true);
 
     // List of CORS proxy services to try as fallback
@@ -200,9 +223,28 @@ async function analyzeExternalURL() {
             // Clean up iframe
             document.body.removeChild(iframe);
 
+            // Filter tokens based on checkboxes
+            const selectedTypes = Array.from(document.querySelectorAll('input[name="extractType"]:checked')).map(cb => cb.value);
+
+            // Filter the extracted tokens object
+            const filteredTokens = {};
+            Object.keys(tokens).forEach(key => {
+                if (selectedTypes.includes(key)) {
+                    filteredTokens[key] = tokens[key];
+                }
+            });
+
             // Process and display tokens
-            processTokens(tokens);
-            renderTokens();
+            processTokens(filteredTokens);
+
+            // Use enhanced rendering if available, otherwise fallback to basic rendering
+            if (typeof window.EnhancedFeatures !== 'undefined') {
+                window.EnhancedFeatures.renderEnhancedTokens(AppState.currentCategory);
+                window.EnhancedFeatures.attachEnhancedEventListeners();
+            } else {
+                renderTokens();
+            }
+
             showDashboard();
             updateStats();
 
@@ -335,6 +377,9 @@ async function extractDesignTokens(rootElement, targetWindow = window) {
 
     // Extract @font-face declarations
     extractFontFaces(tokens.assets);
+
+    // Extract complete text styles
+    extractTextStyles(rootElement, targetWindow, tokens.typography);
 
     // Extract @keyframes animations
     extractKeyframes(tokens.motion);
@@ -511,6 +556,7 @@ function extractEffects(computed, uniqueSet, tokenArray) {
  * Extract motion/animation values
  */
 function extractMotion(computed, uniqueSet, tokenArray) {
+    // Transitions
     const transitionDuration = computed.transitionDuration;
     const transitionTimingFunction = computed.transitionTimingFunction;
 
@@ -528,9 +574,34 @@ function extractMotion(computed, uniqueSet, tokenArray) {
         uniqueSet.add(`timing-${transitionTimingFunction}`);
         tokenArray.push({
             type: 'motion',
-            category: 'transition-timing-function',
+            category: 'transition-timing',
             value: transitionTimingFunction,
-            name: 'timing-function'
+            name: 'bezier'
+        });
+    }
+
+    // Animations
+    const animationDuration = computed.animationDuration;
+    const animationTimingFunction = computed.animationTimingFunction;
+    const animationName = computed.animationName;
+
+    if (animationDuration && animationDuration !== '0s' && !uniqueSet.has(`anim-duration-${animationDuration}`)) {
+        uniqueSet.add(`anim-duration-${animationDuration}`);
+        tokenArray.push({
+            type: 'motion',
+            category: 'animation-duration',
+            value: animationDuration,
+            name: `anim-duration-${animationDuration.replace(/[^a-z0-9]/gi, '-')}`
+        });
+    }
+
+    if (animationName && animationName !== 'none' && !uniqueSet.has(`anim-name-${animationName}`)) {
+        uniqueSet.add(`anim-name-${animationName}`);
+        tokenArray.push({
+            type: 'motion',
+            category: 'animation-name',
+            value: animationName,
+            name: animationName
         });
     }
 }
@@ -572,6 +643,45 @@ function extractAssets(element, tokenArray) {
 }
 
 /**
+ * Extract complete text styles from semantic elements
+ */
+function extractTextStyles(root, window, tokenArray) {
+    const tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'small', 'blockquote', 'a', 'button', 'label'];
+    const seen = new Set();
+
+    tags.forEach(tag => {
+        const elements = root.querySelectorAll(tag);
+        // Take samples
+        Array.from(elements).slice(0, 3).forEach((el, index) => {
+            const style = window.getComputedStyle(el);
+            const signature = `${style.fontSize}-${style.fontWeight}-${style.lineHeight}-${style.fontFamily}`;
+
+            if (!seen.has(signature)) {
+                seen.add(signature);
+
+                let name = tag.toUpperCase();
+                if (elements.length > 1 && index > 0) name += ` (Var ${index + 1})`;
+
+                tokenArray.push({
+                    type: 'typography',
+                    category: 'text-style',
+                    name: name,
+                    value: style.fontFamily,
+                    attributes: {
+                        fontSize: style.fontSize,
+                        fontWeight: style.fontWeight,
+                        lineHeight: style.lineHeight,
+                        letterSpacing: style.letterSpacing,
+                        fontFamily: style.fontFamily,
+                        color: style.color
+                    }
+                });
+            }
+        });
+    });
+}
+
+/**
  * Extract @font-face declarations
  */
 function extractFontFaces(tokenArray) {
@@ -582,24 +692,27 @@ function extractFontFaces(tokenArray) {
             const rules = Array.from(sheet.cssRules || sheet.rules || []);
             rules.forEach(rule => {
                 if (rule instanceof CSSFontFaceRule) {
-                    const fontFamily = rule.style.fontFamily;
+                    const fontFamily = rule.style.fontFamily.replace(/['"]/g, '');
                     const src = rule.style.src;
 
-                    tokenArray.push({
-                        type: 'assets',
-                        category: 'font-face',
-                        value: src,
-                        name: fontFamily,
-                        attributes: {
-                            fontWeight: rule.style.fontWeight,
-                            fontStyle: rule.style.fontStyle
-                        }
-                    });
+                    const urlMatch = src.match(/url\(['"]?([^'"]+)['"]?\)/);
+
+                    if (urlMatch && urlMatch[1]) {
+                        const url = urlMatch[1];
+                        const ext = url.split('.').pop().split(/[?#]/)[0].toLowerCase();
+
+                        tokenArray.push({
+                            type: 'assets',
+                            category: 'font',
+                            value: url,
+                            name: `${fontFamily} (${ext})`,
+                            attributes: { format: ext }
+                        });
+                    }
                 }
             });
         } catch (e) {
-            // Skip stylesheets we can't access due to CORS
-            console.warn('Cannot access stylesheet:', sheet.href, e);
+            // CORS or generic error
         }
     });
 }
@@ -642,28 +755,49 @@ function extractKeyframes(tokenArray) {
  * Process extracted tokens for display
  */
 function processTokens(tokens) {
-    AppState.tokenData = [];
+    // Initialize tokenData as an object with categories
+    AppState.tokenData = {
+        colors: [],
+        typography: [],
+        spacing: [],
+        assets: [],
+        effects: [],
+        motion: []
+    };
 
-    // Convert all token arrays into a single flat array
+    let totalTokens = 0;
+
+    // Organize tokens by category
     Object.keys(tokens).forEach(category => {
-        tokens[category].forEach(token => {
-            AppState.tokenData.push({
+        if (AppState.tokenData.hasOwnProperty(category)) {
+            AppState.tokenData[category] = tokens[category].map(token => ({
                 ...token,
                 id: generateTokenId()
-            });
-        });
+            }));
+            totalTokens += AppState.tokenData[category].length;
+        }
     });
 
-    console.log(`📊 Processed ${AppState.tokenData.length} design tokens`);
+    console.log(`📊 Processed ${totalTokens} design tokens`, AppState.tokenData);
 }
 
 /**
  * Render tokens in the grid
  */
 function renderTokens() {
-    const filteredTokens = AppState.currentCategory === 'all'
-        ? AppState.tokenData
-        : AppState.tokenData.filter(token => token.type === AppState.currentCategory);
+    let filteredTokens = [];
+
+    if (AppState.currentCategory === 'all') {
+        // Combine all tokens from all categories
+        Object.values(AppState.tokenData).forEach(category => {
+            if (Array.isArray(category)) {
+                filteredTokens = filteredTokens.concat(category);
+            }
+        });
+    } else {
+        // Get tokens for specific category
+        filteredTokens = AppState.tokenData[AppState.currentCategory] || [];
+    }
 
     DOM.tokenGrid.innerHTML = '';
 
@@ -769,15 +903,28 @@ function handleCategoryChange(e) {
     // Update current category
     AppState.currentCategory = category;
 
-    // Re-render tokens
-    renderTokens();
+    // Re-render tokens with enhanced features
+    if (typeof window.EnhancedFeatures !== 'undefined') {
+        window.EnhancedFeatures.renderEnhancedTokens(category);
+        window.EnhancedFeatures.attachEnhancedEventListeners();
+    } else {
+        renderTokens();
+    }
 }
 
 /**
  * Open export modal
  */
 function openExportModal() {
-    if (AppState.tokenData.length === 0) {
+    // Count total tokens across all categories
+    let totalTokens = 0;
+    Object.values(AppState.tokenData).forEach(category => {
+        if (Array.isArray(category)) {
+            totalTokens += category.length;
+        }
+    });
+
+    if (totalTokens === 0) {
         alert(t('noTokensToExport'));
         return;
     }
@@ -843,16 +990,22 @@ function handleExport(e) {
 function exportAsW3CJSON() {
     const tokens = {};
 
-    AppState.tokenData.forEach(token => {
-        if (!tokens[token.type]) {
-            tokens[token.type] = {};
-        }
+    // Iterate over all categories
+    Object.keys(AppState.tokenData).forEach(type => {
+        const tokensInCategory = AppState.tokenData[type];
+        if (Array.isArray(tokensInCategory)) {
+            tokensInCategory.forEach(token => {
+                if (!tokens[token.type]) {
+                    tokens[token.type] = {};
+                }
 
-        tokens[token.type][token.name] = {
-            $value: token.value,
-            $type: mapToW3CType(token.type, token.category),
-            $description: `${token.category} token extracted from page`
-        };
+                tokens[token.type][token.name] = {
+                    $value: token.value,
+                    $type: mapToW3CType(token.type, token.category),
+                    $description: `${token.category} token extracted from page`
+                };
+            });
+        }
     });
 
     return JSON.stringify(tokens, null, 2);
@@ -915,17 +1068,23 @@ function exportAsFigmaTokens() {
         global: {}
     };
 
-    AppState.tokenData.forEach(token => {
-        const category = token.type;
+    // Iterate over all categories
+    Object.keys(AppState.tokenData).forEach(category => {
+        const tokensInCategory = AppState.tokenData[category];
+        if (Array.isArray(tokensInCategory)) {
+            tokensInCategory.forEach(token => {
+                const tokenCategory = token.type;
 
-        if (!figmaTokens.global[category]) {
-            figmaTokens.global[category] = {};
+                if (!figmaTokens.global[tokenCategory]) {
+                    figmaTokens.global[tokenCategory] = {};
+                }
+
+                figmaTokens.global[tokenCategory][token.name] = {
+                    value: token.value,
+                    type: mapToFigmaType(token.type, token.category)
+                };
+            });
         }
-
-        figmaTokens.global[category][token.name] = {
-            value: token.value,
-            type: mapToFigmaType(token.type, token.category)
-        };
     });
 
     return JSON.stringify(figmaTokens, null, 2);
@@ -937,11 +1096,12 @@ function exportAsFigmaTokens() {
 function groupTokensByType() {
     const grouped = {};
 
-    AppState.tokenData.forEach(token => {
-        if (!grouped[token.type]) {
-            grouped[token.type] = [];
+    // Iterate over all categories
+    Object.keys(AppState.tokenData).forEach(type => {
+        const tokensInCategory = AppState.tokenData[type];
+        if (Array.isArray(tokensInCategory) && tokensInCategory.length > 0) {
+            grouped[type] = tokensInCategory;
         }
-        grouped[token.type].push(token);
     });
 
     return grouped;
@@ -1028,16 +1188,27 @@ function showLoading(show) {
  * Update header stats
  */
 function updateStats() {
-    const stats = DOM.headerStats.querySelectorAll('.stat-item');
+    // Get new dashboard stats elements
+    const tokenCount = document.getElementById('tokenCount');
+    const elementCount = document.getElementById('elementCount');
 
-    if (stats[0]) {
-        stats[0].querySelector('.stat-value').textContent = AppState.tokenData.length;
+    // Count total tokens across all categories
+    let totalTokens = 0;
+    Object.values(AppState.tokenData).forEach(category => {
+        if (Array.isArray(category)) {
+            totalTokens += category.length;
+        }
+    });
+
+    if (tokenCount) {
+        tokenCount.textContent = totalTokens;
     }
 
-    if (stats[1]) {
-        stats[1].querySelector('.stat-value').textContent = AppState.analyzedElements;
+    if (elementCount) {
+        elementCount.textContent = AppState.analyzedElements;
     }
 }
+
 
 /**
  * Download a file
@@ -1242,12 +1413,18 @@ function applyLanguage(lang) {
 function updateTextContent(selector, text, index = 0) {
     const elements = document.querySelectorAll(selector);
     if (elements[index]) {
+        // Check if this is an icon-only button (should not have text)
+        const isIconOnly = elements[index].classList.contains('btn-icon-inline');
+
         // Preserve icons/SVG in buttons
         const svg = elements[index].querySelector('svg');
         if (svg) {
             elements[index].textContent = '';
             elements[index].appendChild(svg.cloneNode(true));
-            elements[index].appendChild(document.createTextNode(' ' + text));
+            // Only add text if it's NOT an icon-only button
+            if (!isIconOnly) {
+                elements[index].appendChild(document.createTextNode(' ' + text));
+            }
         } else {
             elements[index].textContent = text;
         }
@@ -1257,10 +1434,10 @@ function updateTextContent(selector, text, index = 0) {
 /**
  * Get translated text for a key
  */
-function t(key) {
+window.t = function t(key) {
     const lang = AppState.currentLanguage;
     return translations[lang]?.[key] || key;
-}
+};
 
 /* ================================================
    THEME MANAGEMENT FUNCTIONS
