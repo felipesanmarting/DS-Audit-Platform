@@ -134,6 +134,14 @@ function attachEventListeners() {
     // Download buttons
     document.getElementById('downloadCategoryBtn')?.addEventListener('click', downloadCurrentCategory);
     document.getElementById('downloadAllBtn')?.addEventListener('click', downloadAllTokens);
+
+    // Enter key on URL input
+    DOM.urlInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            analyzeExternalURL();
+        }
+    });
 }
 
 /**
@@ -251,8 +259,8 @@ async function analyzeExternalURL() {
             // Reset state
             resetTokens();
 
-            // Extract tokens from the iframe document
-            const tokens = await extractDesignTokens(iframe.contentDocument, iframe.contentWindow);
+            // Extract tokens from the iframe document body
+            const tokens = await extractDesignTokens(iframe.contentDocument.body, iframe.contentWindow);
 
             // Clean up iframe
             document.body.removeChild(iframe);
