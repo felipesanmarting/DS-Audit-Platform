@@ -338,9 +338,9 @@ body {
 
 /* Centered Input Card Modification */
 .input-card.centered-card {
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
-    max-width: 900px;
+    max-width: 100%;
     min-width: 320px;
 }
 
