@@ -883,16 +883,18 @@ function renderTokens() {
     }
 
     DOM.tokenGrid.innerHTML = '';
+    const emptyState = document.getElementById('emptyState');
 
     if (filteredTokens.length === 0) {
-        DOM.tokenGrid.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--color-text-tertiary);">
-                <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">No tokens found</p>
-                <p style="font-size: 0.875rem;">Try analyzing a page or switch to a different category</p>
-            </div>
-        `;
+        // Show empty state
+        DOM.tokenGrid.style.display = 'none';
+        if (emptyState) emptyState.style.display = 'flex';
         return;
     }
+
+    // Hide empty state and show grid
+    DOM.tokenGrid.style.display = 'grid';
+    if (emptyState) emptyState.style.display = 'none';
 
     filteredTokens.forEach(token => {
         const card = createTokenCard(token);
@@ -1556,6 +1558,11 @@ function applyLanguage(lang) {
     updateTextContent('.dashboard-header h2', t.extractedTokens);
     updateTextContent('#clearBtn', t.clearBtn);
     updateTextContent('#exportBtn', t.exportBtn);
+
+    // Update Empty State
+    updateTextContent('.empty-state-title', t.noTokensFound);
+    updateTextContent('.empty-state-description', t.tryAnalyzing);
+
     // Update category tabs
     updateTextContent('.tab-btn[data-category="all"]', t.allTokens);
     updateTextContent('.tab-btn[data-category="colors"]', t.colors);
