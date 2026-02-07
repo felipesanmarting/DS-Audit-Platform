@@ -91,7 +91,7 @@
 /* Light Theme Variables */
 [data-theme="light"] {
     /* Colors - Primary Palette (Clean whites and grays) */
-    --color-bg-primary: #ffffff;
+    --color-bg-primary: #ececec;
     --color-bg-secondary: #fafafa;
     --color-bg-tertiary: #f4f4f5;
     --color-bg-elevated: #ffffff;
@@ -884,7 +884,7 @@ body {
     padding: var(--spacing-2xl);
     margin: 0;
     animation: slideUp var(--transition-slow);
-    background-color: #101013;
+    background-color: var(--color-bg-primary);
     z-index: 1;
 }
 
