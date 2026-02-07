@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials Example - Shadcn Style</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="testimonial-components.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <main class="app-container">
+        <!-- Theme Toggle -->
+        <div style="position: fixed; top: 20px; right: 20px; z-index: 100;">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M10 3a1 1 0 011 1v1a1 1 0 11-2 0V4a1 1 0 011-1zm0 10a3 3 0 100-6 3 3 0 000 6zm7-3a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zm9.95 4.95a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zM6.76 6.76a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zm8.49 0a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM5.05 14.95a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z" />
+                </svg>
+                <svg class="theme-icon moon-icon hidden" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Testimonials Section -->
+        <section class="section">
+            <div class="container-wide">
+                <!-- Section Header -->
+                <div class="container-narrow text-center space-y-6" style="margin-bottom: var(--spacing-2xl);">
+                    <h2
+                        style="font-size: var(--font-size-3xl); font-weight: var(--font-weight-medium); line-height: var(--line-height-tight);">
+                        Built by makers, loved by thousand developers
+                    </h2>
+                    <p style="color: var(--color-text-secondary); font-size: var(--font-size-lg);">
+                        Gemini is evolving to be more than just the models. It supports an entire ecosystem of APIs and
+                        platforms helping developers and businesses innovate.
+                    </p>
+                </div>
+
+                <!-- Testimonials Grid -->
+                <div class="testimonial-grid">
+                    <!-- Featured Large Testimonial -->
+                    <div class="testimonial-card testimonial-featured">
+                        <div class="card-header">
+                            <img class="logo-image invert-on-dark"
+                                src="https://html.tailus.io/blocks/customers/nike.svg" alt="Nike Logo" />
+                        </div>
+                        <div class="testimonial-quote">
+                            <p class="testimonial-text large">
+                                Tailus has transformed the way I develop web applications. Their extensive collection of
+                                UI components, blocks, and templates has significantly accelerated my workflow. The
+                                flexibility to customize every aspect allows me to create unique user experiences.
+                            </p>
+                            <div class="user-info">
+                                <div class="avatar avatar-md">
+                                    <img src="https://tailus.io/images/reviews/shekinah.webp"
+                                        alt="Shekinah Tshiokufila" />
+                                </div>
+                                <div class="user-details">
+                                    <cite class="user-name">Shekinah Tshiokufila</cite>
+                                    <span class="user-role">Software Engineer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wide Testimonial -->
+                    <div class="testimonial-card testimonial-wide">
+                        <div class="testimonial-quote">
+                            <p class="testimonial-text large">
+                                Tailus is really extraordinary and very practical, no need to break your head. A real
+                                gold mine.
+                            </p>
+                            <div class="user-info">
+                                <div class="avatar avatar-md">
+                                    <img src="https://tailus.io/images/reviews/jonathan.webp" alt="Jonathan Yombo" />
+                                </div>
+                                <div class="user-details">
+                                    <cite class="user-name">Jonathan Yombo</cite>
+                                    <span class="user-role">Software Engineer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regular Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">
+                            <p class="testimonial-text">
+                                Great work on tailfolio template. This is one of the best personal websites that I have
+                                seen so far!
+                            </p>
+                            <div class="user-info">
+                                <div class="avatar avatar-md">
+                                    <img src="https://tailus.io/images/reviews/yucel.webp" alt="Yucel Faruksahan" />
+                                </div>
+                                <div class="user-details">
+                                    <cite class="user-name">Yucel Faruksahan</cite>
+                                    <span class="user-role">Creator, Tailkits</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regular Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">
+                            <p class="testimonial-text">
+                                Amazing component library with great attention to detail. The dark mode is flawless!
+                            </p>
+                            <div class="user-info">
+                                <div class="avatar avatar-md">
+                                    <img src="https://tailus.io/images/reviews/rodrigo.webp" alt="Rodrigo Aguilar" />
+                                </div>
+                                <div class="user-details">
+                                    <cite class="user-name">Rodrigo Aguilar</cite>
+                                    <span class="user-role">Creator, TailwindAwesome</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Examples -->
+        <section class="section" style="background: var(--color-bg-secondary);">
+            <div class="container-medium">
+                <h2
+                    style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-xl); text-align: center;">
+                    More Component Examples
+                </h2>
+
+                <!-- Cards Grid -->
+                <div class="grid-auto-fill">
+                    <!-- Card with Badge -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--spacing-md);">
+                                <h3 class="card-title">Feature Card</h3>
+                                <span class="badge badge-primary">New</span>
+                            </div>
+                            <p class="card-description">
+                                Example of a card component with a badge and description
+                            </p>
+                        </div>
+                        <div class="card-content">
+                            <p style="color: var(--color-text-secondary);">
+                                This card demonstrates the clean, modern styling inspired by shadcn/ui components.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card with Avatar -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">User Profile</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="user-info">
+                                <div class="avatar avatar-lg">
+                                    <div class="avatar-fallback">FS</div>
+                                </div>
+                                <div class="user-details">
+                                    <div class="user-name">Felipe San Martín</div>
+                                    <div class="user-role">Product Designer</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card with Badges -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Tags & Badges</h3>
+                            <p class="card-description">Different badge variants</p>
+                        </div>
+                        <div class="card-content">
+                            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm);">
+                                <span class="badge badge-default">Default</span>
+                                <span class="badge badge-primary">Primary</span>
+                                <span class="badge badge-success">Success</span>
+                                <span class="badge badge-muted">Muted</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card with Separator -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">With Separator</h3>
+                            <p class="card-description">Using horizontal divider</p>
+                        </div>
+                        <div class="card-content">
+                            <p style="color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">
+                                Content above separator
+                            </p>
+                            <hr class="separator" />
+                            <p style="color: var(--color-text-secondary); margin-top: var(--spacing-md);">
+                                Content below separator
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+
+        // Check for saved theme preference or default to 'dark'
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const theme = html.getAttribute('data-theme');
+
+            if (theme === 'light') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -13,16 +13,24 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
+
+    <!-- React and Framer Motion for BackgroundBeams -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js"></script>
 </head>
 
 <body>
     <!-- Main Container -->
     <main class="app-container">
 
+        <!-- Background Beams Effect (React Component) -->
+        <div id="background-beams-root"></div>
+
         <!-- Hero Section (formerly Header) -->
         <div class="hero-section">
             <div class="hero-logo-container">
-                <div class="logo-icon hero-icon">
+                <!-- <div class="logo-icon hero-icon">
                     <svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="4" y="4" width="10" height="10" rx="2" fill="url(#grad1)" />
                         <rect x="18" y="4" width="10" height="10" rx="2" fill="url(#grad2)" />
@@ -47,37 +55,34 @@
                             </linearGradient>
                         </defs>
                     </svg>
-                </div>
+                </div> -->
                 <div class="hero-text-content">
                     <h1>Auditoría de tokens</h1>
                     <p class="tagline">Extrae, Analiza y Exporta Sistemas de Diseño</p>
                 </div>
             </div>
-
-            <div class="hero-controls">
-                <!-- Language Toggle -->
-                <div class="hero-control-group">
-                    <div class="language-toggle">
-                        <button class="lang-btn active" data-lang="es">ES</button>
-                        <button class="lang-btn" data-lang="en">EN</button>
-                    </div>
-                </div>
-
-                <!-- Theme Toggle -->
-                <div class="hero-control-group">
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                        <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                            <path
-                                d="M10 3a1 1 0 011 1v1a1 1 0 11-2 0V4a1 1 0 011-1zm0 10a3 3 0 100-6 3 3 0 000 6zm7-3a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zm9.95 4.95a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zM6.76 6.76a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zm8.49 0a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM5.05 14.95a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z" />
-                        </svg>
-                        <svg class="theme-icon moon-icon hidden" width="20" height="20" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
         </div>
+
+        <!-- Controls Section (Language & Theme) -->
+        <section class="controls-section">
+            <div class="controls-container centered-card">
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="es">ES</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="theme-icon sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                            d="M10 3a1 1 0 011 1v1a1 1 0 11-2 0V4a1 1 0 011-1zm0 10a3 3 0 100-6 3 3 0 000 6zm7-3a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zm9.95 4.95a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zM6.76 6.76a1 1 0 01-1.41 0l-.71-.71a1 1 0 011.41-1.41l.71.71a1 1 0 010 1.41zm8.49 0a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM5.05 14.95a1 1 0 010-1.41l.71-.71a1 1 0 011.41 1.41l-.71.71a1 1 0 01-1.41 0zM10 15a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z" />
+                    </svg>
+                    <svg class="theme-icon moon-icon hidden" width="20" height="20" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+                </button>
+            </div>
+        </section>
 
         <!-- Input Section -->
         <section class="input-section">
@@ -105,112 +110,149 @@
                     <div class="checkbox-group">
                         <label class="checkbox-label">
                             <input type="checkbox" name="extractType" value="colors" checked>
-                            <span class="checkbox-text">Colors</span>
+                            <span class="checkbox-text"></span>
+                            <span>Colors</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="extractType" value="typography" checked>
-                            <span class="checkbox-text">Typography</span>
+                            <span class="checkbox-text"></span>
+                            <span>Typography</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="extractType" value="spacing" checked>
-                            <span class="checkbox-text">Spacing</span>
+                            <span class="checkbox-text"></span>
+                            <span>Spacing</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="extractType" value="borderRadius" checked>
+                            <span class="checkbox-text"></span>
+                            <span>Border radii</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="extractType" value="assets" checked>
-                            <span class="checkbox-text">Assets</span>
+                            <span class="checkbox-text"></span>
+                            <span>Assets</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="extractType" value="effects" checked>
-                            <span class="checkbox-text">Box Shadow</span>
+                            <span class="checkbox-text"></span>
+                            <span>Box Shadow</span>
                         </label>
                         <label class="checkbox-label">
                             <input type="checkbox" name="extractType" value="motion" checked>
-                            <span class="checkbox-text">Motion</span>
+                            <span class="checkbox-text"></span>
+                            <span>Motion</span>
                         </label>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dashboard Section -->
-        <section class="dashboard-section" id="dashboardSection" style="display: none;">
-            <div class="dashboard-header">
-                <h2>Extracted Design Tokens</h2>
-                <div class="dashboard-actions">
-                    <button class="btn btn-secondary" id="clearBtn">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M2 4h12v1H2V4zm1 2h10l-1 9H4L3 6zm3-3h4V2H6v1z" />
-                        </svg>
-                        Clear
-                    </button>
-                    <button class="btn btn-primary" id="exportBtn">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M8 1v8l3-3 1 1-5 5-5-5 1-1 3 3V1h2zm-6 13h12v1H2v-1z" />
-                        </svg>
-                        Export Tokens
-                    </button>
-                </div>
-            </div>
+    </main>
 
-            <!-- Category Tabs with Stats -->
-            <div class="tabs-container">
-                <div class="category-tabs" id="categoryTabs">
-                    <button class="tab-btn active" data-category="colors">Colors</button>
-                    <button class="tab-btn" data-category="typography">Typography</button>
-                    <button class="tab-btn" data-category="spacing">Spacing</button>
-                    <button class="tab-btn" data-category="assets">Assets</button>
-                    <button class="tab-btn" data-category="effects">Shadows</button>
-                    <button class="tab-btn" data-category="motion">Motion</button>
-                </div>
-
-                <!-- Stats moved here -->
-                <div class="dashboard-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="tokenCount">0</div>
-                        <div class="stat-label">Tokens</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="elementCount">0</div>
-                        <div class="stat-label">Elements</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Download Controls -->
-            <div class="download-controls" id="downloadControls">
-                <span class="download-label">Download:</span>
-                <button class="btn-download btn-download-secondary" id="downloadCategoryBtn">
+    <!-- Dashboard Section (Outside app-container for independent width) -->
+    <section class="dashboard-section" id="dashboardSection" style="display: none;">
+        <div class="dashboard-header">
+            <h2>Extracted Design Tokens</h2>
+            <div class="dashboard-actions">
+                <button class="btn btn-secondary" id="clearBtn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M2 4h12v1H2V4zm1 2h10l-1 9H4L3 6zm3-3h4V2H6v1z" />
+                    </svg>
+                    Clear
+                </button>
+                <button class="btn btn-primary" id="exportBtn">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M8 1v8l3-3 1 1-5 5-5-5 1-1 3 3V1h2zm-6 13h12v1H2v-1z" />
                     </svg>
-                    Current Category
-                </button>
-                <button class="btn-download" id="downloadAllBtn">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M8 1v8l3-3 1 1-5 5-5-5 1-1 3 3V1h2zm-6 13h12v1H2v-1z" />
-                    </svg>
-                    All Tokens
+                    Export Tokens
                 </button>
             </div>
+        </div>
 
-            <!-- Asset Download Controls (hidden by default, shown when on assets tab) -->
-            <div class="asset-controls hidden" id="assetControls">
-                <div class="asset-filters">
-                    <span class="filter-label">Filter:</span>
-                    <button class="btn-filter" data-filter="all">All</button>
-                    <button class="btn-filter" data-filter="icons">Icons Only</button>
-                    <button class="btn-filter" data-filter="jpg">JPG</button>
-                    <button class="btn-filter" data-filter="png">PNG</button>
-                    <button class="btn-filter" data-filter="svg">SVG</button>
-                    <button class="btn-filter" data-filter="other">Other</button>
+        <!-- Category Tabs with Stats -->
+        <div class="tabs-container">
+            <div class="category-tabs" id="categoryTabs">
+                <button class="tab-btn active" data-category="colors">Colors</button>
+                <button class="tab-btn" data-category="typography">Typography</button>
+                <button class="tab-btn" data-category="spacing">Spacing</button>
+                <button class="tab-btn" data-category="borderRadius">Border radii</button>
+                <button class="tab-btn" data-category="assets">Assets</button>
+                <button class="tab-btn" data-category="effects">Shadows</button>
+                <button class="tab-btn" data-category="motion">Motion</button>
+            </div>
+
+            <!-- Stats moved here -->
+            <div class="dashboard-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="tokenCount">0</div>
+                    <div class="stat-label">Tokens</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="elementCount">0</div>
+                    <div class="stat-label">Elements</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Token Grid -->
-            <div class="token-grid" id="tokenGrid">
-                <!-- Tokens will be dynamically inserted here -->
+        <!-- Download Controls -->
+        <div class="download-controls" id="downloadControls">
+            <span class="download-label">Download:</span>
+            <button class="btn-download btn-download-secondary" id="downloadCategoryBtn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 1v8l3-3 1 1-5 5-5-5 1-1 3 3V1h2zm-6 13h12v1H2v-1z" />
+                </svg>
+                Current Category
+            </button>
+            <button class="btn-download" id="downloadAllBtn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 1v8l3-3 1 1-5 5-5-5 1-1 3 3V1h2zm-6 13h12v1H2v-1z" />
+                </svg>
+                All Tokens
+            </button>
+        </div>
+
+        <!-- Asset Download Controls (hidden by default, shown when on assets tab) -->
+        <div class="asset-controls hidden" id="assetControls">
+            <div class="asset-filters">
+                <span class="filter-label">Filter:</span>
+                <button class="btn-filter" data-filter="all">All</button>
+                <button class="btn-filter" data-filter="icons">Icons Only</button>
+                <button class="btn-filter" data-filter="jpg">JPG</button>
+                <button class="btn-filter" data-filter="png">PNG</button>
+                <button class="btn-filter" data-filter="svg">SVG</button>
+                <button class="btn-filter" data-filter="other">Other</button>
             </div>
-        </section>
+        </div>
+
+        <!-- Token Grid -->
+        <div class="token-grid" id="tokenGrid">
+            <!-- Tokens will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Modals and Overlays -->
+    <div class="modals-wrapper">
+        <!-- Clear Confirmation Alert Dialog -->
+        <div class="alert-dialog" id="clearConfirmDialog" style="display: none;">
+            <div class="alert-dialog-overlay"></div>
+            <div class="alert-dialog-content">
+                <div class="alert-dialog-header">
+                    <h2 class="alert-dialog-title">¿Estás seguro?</h2>
+                    <p class="alert-dialog-description">
+                        Esta acción no se puede deshacer. Se eliminarán todos los tokens extraídos de la sesión actual.
+                    </p>
+                </div>
+                <div class="alert-dialog-footer">
+                    <button class="btn btn-secondary alert-dialog-cancel" id="clearCancelBtn">
+                        Cancelar
+                    </button>
+                    <button class="btn btn-danger alert-dialog-action" id="clearConfirmBtn">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- Export Modal -->
         <div class="modal" id="exportModal">
@@ -259,7 +301,7 @@
             </div>
             <p class="loading-text">Analyzing design tokens...</p>
         </div>
-    </main>
+    </div>
 
     <!-- Footer -->
     <footer class="app-footer">
@@ -276,6 +318,9 @@
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Background Beams Component -->
+    <script src="background-beams.js"></script>
 
     <script src="i18n.js"></script>
     <script src="features.js"></script>

@@ -47,6 +47,7 @@ const translations = {
         colors: 'Colors',
         typography: 'Typography',
         spacing: 'Spacing',
+        borderRadius: 'Border radii',
         assets: 'Assets',
         effects: 'Shadows',
         motion: 'Motion',
@@ -74,6 +75,12 @@ const translations = {
         copyFailed: 'Error al copiar al portapapeles. Por favor, inténtalo de nuevo.',
         errorAnalyzingPage: 'Error al analizar la página. Revisa la consola para más detalles.',
         pleaseEnterURL: 'Por favor, ingresa una URL válida',
+
+        // Alert Dialog
+        alertDialogTitle: '¿Estás seguro?',
+        alertDialogDescription: 'Esta acción no se puede deshacer. Se eliminarán todos los tokens extraídos de la sesión actual.',
+        alertDialogCancel: 'Cancelar',
+        alertDialogConfirm: 'Eliminar',
 
         // CORS Error
         corsErrorTitle: 'Error CORS',
@@ -145,6 +152,7 @@ const translations = {
         colors: 'Colors',
         typography: 'Typography',
         spacing: 'Spacing',
+        borderRadius: 'Border radii',
         assets: 'Assets',
         effects: 'Shadows',
         motion: 'Motion',
@@ -172,6 +180,12 @@ const translations = {
         copyFailed: 'Failed to copy to clipboard. Please try again.',
         errorAnalyzingPage: 'Error analyzing page. Check console for details.',
         pleaseEnterURL: 'Please enter a valid URL',
+
+        // Alert Dialog
+        alertDialogTitle: 'Are you sure?',
+        alertDialogDescription: 'This action cannot be undone. All extracted tokens from the current session will be deleted.',
+        alertDialogCancel: 'Cancel',
+        alertDialogConfirm: 'Delete',
 
         // CORS Error
         corsErrorTitle: 'CORS Error',

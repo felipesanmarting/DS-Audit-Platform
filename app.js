@@ -11,6 +11,7 @@ window.AppState = {
         colors: new Set(),
         typography: new Set(),
         spacing: new Set(),
+        borderRadius: new Set(),
         assets: new Set(),
         effects: new Set(),
         motion: new Set()
@@ -134,6 +135,13 @@ function attachEventListeners() {
     // Download buttons
     document.getElementById('downloadCategoryBtn')?.addEventListener('click', downloadCurrentCategory);
     document.getElementById('downloadAllBtn')?.addEventListener('click', downloadAllTokens);
+
+    // Alert Dialog buttons
+    document.getElementById('clearCancelBtn')?.addEventListener('click', closeAlertDialog);
+    document.getElementById('clearConfirmBtn')?.addEventListener('click', executeClearTokens);
+
+    // Close dialog on overlay click
+    document.getElementById('clearConfirmDialog')?.querySelector('.alert-dialog-overlay')?.addEventListener('click', closeAlertDialog);
 
     // Enter key on URL input
     DOM.urlInput.addEventListener('keypress', (e) => {
@@ -379,6 +387,7 @@ async function extractDesignTokens(rootElement, targetWindow = window) {
         colors: [],
         typography: [],
         spacing: [],
+        borderRadius: [],
         assets: [],
         effects: [],
         motion: []
@@ -394,6 +403,7 @@ async function extractDesignTokens(rootElement, targetWindow = window) {
     const uniqueColors = new Set();
     const uniqueFonts = new Set();
     const uniqueSpacing = new Set();
+    const uniqueBorderRadius = new Set();
     const uniqueEffects = new Set();
     const uniqueMotion = new Set();
 
@@ -411,6 +421,9 @@ async function extractDesignTokens(rootElement, targetWindow = window) {
 
         // Extract Spacing
         extractSpacing(computed, uniqueSpacing, tokens.spacing);
+
+        // Extract Border Radius
+        extractBorderRadius(computed, uniqueBorderRadius, tokens.borderRadius);
 
         // Extract Effects
         extractEffects(computed, uniqueEffects, tokens.effects);
@@ -568,18 +581,40 @@ function extractSpacing(computed, uniqueSet, tokenArray) {
             });
         }
     });
+}
 
-    // Border radius
+/**
+ * Extract border radius values
+ */
+function extractBorderRadius(computed, uniqueSet, tokenArray) {
+    // Border radius (shorthand)
     const borderRadius = computed.borderRadius;
     if (borderRadius && borderRadius !== '0px' && !uniqueSet.has(`radius-${borderRadius}`)) {
         uniqueSet.add(`radius-${borderRadius}`);
         tokenArray.push({
-            type: 'spacing',
+            type: 'borderRadius',
             category: 'border-radius',
             value: borderRadius,
             name: `radius-${borderRadius.replace(/[^a-z0-9]/gi, '-')}`
         });
     }
+
+    // Border radius individual corners
+    const corners = ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft'];
+    corners.forEach(corner => {
+        const propName = `border${corner}Radius`;
+        const value = computed[propName];
+
+        if (value && value !== '0px' && !uniqueSet.has(`${propName}-${value}`)) {
+            uniqueSet.add(`${propName}-${value}`);
+            tokenArray.push({
+                type: 'borderRadius',
+                category: 'border-radius',
+                value: value,
+                name: `radius-${corner.toLowerCase()}-${value.replace(/[^a-z0-9]/gi, '-')}`
+            });
+        }
+    });
 }
 
 /**
@@ -807,6 +842,7 @@ function processTokens(tokens) {
         colors: [],
         typography: [],
         spacing: [],
+        borderRadius: [],
         assets: [],
         effects: [],
         motion: []
@@ -911,6 +947,9 @@ function createTokenPreview(token) {
         case 'spacing':
             return `<div class="spacing-visual" style="width: ${token.value}; height: ${token.value};"></div>`;
 
+        case 'borderRadius':
+            return `<div style="width: 60px; height: 60px; background: var(--color-accent-primary); border-radius: ${token.value};"></div>`;
+
         case 'effects':
             return `<div style="width: 60px; height: 60px; background: var(--color-accent-primary); border-radius: 8px; box-shadow: ${token.value};"></div>`;
 
@@ -984,6 +1023,16 @@ function openExportModal() {
  */
 function closeExportModal() {
     DOM.exportModal.classList.remove('active');
+}
+
+/**
+ * Close alert dialog
+ */
+function closeAlertDialog() {
+    const dialog = document.getElementById('clearConfirmDialog');
+    if (dialog) {
+        dialog.style.display = 'none';
+    }
 }
 
 /**
@@ -1193,25 +1242,37 @@ function mapToFigmaType(type, category) {
  * Clear all tokens and reset application state
  */
 function clearTokens() {
-    if (confirm('Are you sure you want to clear all extracted tokens?')) {
-        // Reset functional state
-        resetTokens();
-
-        // Clear inputs
-        if (DOM.urlInput) DOM.urlInput.value = '';
-
-        // Hide and reset favicon
-        const faviconImg = document.getElementById('targetFavicon');
-        const faviconContainer = document.getElementById('faviconContainer');
-        if (faviconImg) faviconImg.src = '';
-        if (faviconContainer) faviconContainer.style.display = 'none';
-
-        // Clear results UI
-        DOM.tokenGrid.innerHTML = '';
-        DOM.dashboardSection.style.display = 'none';
-
-        updateStats();
+    // Show the custom alert dialog
+    const dialog = document.getElementById('clearConfirmDialog');
+    if (dialog) {
+        dialog.style.display = 'flex';
     }
+}
+
+/**
+ * Execute the actual clear action (called when user confirms)
+ */
+function executeClearTokens() {
+    // Reset functional state
+    resetTokens();
+
+    // Clear inputs
+    if (DOM.urlInput) DOM.urlInput.value = '';
+
+    // Hide and reset favicon
+    const faviconImg = document.getElementById('targetFavicon');
+    const faviconContainer = document.getElementById('faviconContainer');
+    if (faviconImg) faviconImg.src = '';
+    if (faviconContainer) faviconContainer.style.display = 'none';
+
+    // Clear results UI
+    DOM.tokenGrid.innerHTML = '';
+    DOM.dashboardSection.style.display = 'none';
+
+    updateStats();
+
+    // Close the dialog
+    closeAlertDialog();
 }
 
 /**
@@ -1500,6 +1561,7 @@ function applyLanguage(lang) {
     updateTextContent('.tab-btn[data-category="colors"]', t.colors);
     updateTextContent('.tab-btn[data-category="typography"]', t.typography);
     updateTextContent('.tab-btn[data-category="spacing"]', t.spacing);
+    updateTextContent('.tab-btn[data-category="borderRadius"]', t.borderRadius);
     updateTextContent('.tab-btn[data-category="assets"]', t.assets);
 
     // Update banners and buttons
@@ -1527,6 +1589,12 @@ function applyLanguage(lang) {
     updateTextContent('.export-option[data-format="js"] p', t.javascriptDesc);
     updateTextContent('.export-option[data-format="figma"] h3', t.figmaTokens);
     updateTextContent('.export-option[data-format="figma"] p', t.figmaTokensDesc);
+
+    // Update Alert Dialog text
+    updateTextContent('.alert-dialog-title', t.alertDialogTitle);
+    updateTextContent('.alert-dialog-description', t.alertDialogDescription);
+    updateTextContent('.alert-dialog-cancel', t.alertDialogCancel);
+    updateTextContent('.alert-dialog-action', t.alertDialogConfirm);
 
     // Update loading text
     updateTextContent('.loading-text', t.analyzingTokens);
