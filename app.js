@@ -61,6 +61,7 @@ function init() {
     attachEventListeners();
     initializeLanguage();
     initializeTheme();
+    initCustomCursor();
 
     // Initialize enhanced features if available
     if (window.EnhancedFeatures && window.EnhancedFeatures.attachEnhancedEventListeners) {
@@ -1678,6 +1679,60 @@ function applyTheme(theme) {
         moonIcon?.classList.add('hidden');
     }
 }
+
+/**
+ * Initialize custom cursor
+ */
+function initCustomCursor() {
+    const cursorDot = document.getElementById('cursor-dot');
+
+    // Si no existe el elemento, salir (por ejemplo en iframes o entornos restringidos)
+    if (!cursorDot) return;
+
+    // Mover el cursor
+    document.addEventListener('mousemove', (e) => {
+        cursorDot.style.left = `${e.clientX}px`;
+        cursorDot.style.top = `${e.clientY}px`;
+    });
+
+    // Detectar elementos interactivos para el efecto hover
+    const interactiveElements = document.querySelectorAll('a, button, input, label, select, textarea, .card, .token-card, .category-card');
+
+    // Función para manejar el hover
+    const handleMouseOver = () => document.body.classList.add('hovering');
+    const handleMouseOut = () => document.body.classList.remove('hovering');
+
+    // Agregar listeners a elementos existentes
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseover', handleMouseOver);
+        el.addEventListener('mouseout', handleMouseOut);
+    });
+
+    // Observador para elementos dinámicos (como los tokens generados)
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.addedNodes.length) {
+                mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) { // Element node
+                        // Verificar si el nodo agregado es interactivo o contiene elementos interactivos
+                        const elements = node.matches && node.matches('a, button, input, .token-card') ? [node] : node.querySelectorAll('a, button, input, .token-card');
+
+                        elements.forEach(el => {
+                            el.addEventListener('mouseover', handleMouseOver);
+                            el.addEventListener('mouseout', handleMouseOut);
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
 
 
 /* ================================================

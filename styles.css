@@ -262,11 +262,12 @@ body {
 .theme-toggle:hover {
     border-color: var(--color-border-hover);
     background: var(--color-bg-hover);
-    transform: rotate(15deg) scale(1.05);
+    transform: scale(1.05);
+    /* Removed rotate(15deg) */
 }
 
 .theme-toggle:active {
-    transform: rotate(0deg) scale(0.95);
+    transform: scale(0.95);
 }
 
 .theme-icon {
@@ -1101,27 +1102,40 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-4xl) var(--spacing-2xl);
+    padding: 0 var(--spacing-2xl);
     text-align: center;
-    min-height: 400px;
+    min-height: calc(100vh - 280px);
+    /* Fill remaining viewport height */
+    width: 100%;
+    margin: 0 auto;
 }
 
 .empty-state-icon {
-    margin-bottom: var(--spacing-xl);
-    color: var(--color-text-tertiary);
-    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    /* Circle size */
+    height: 96px;
+    margin-bottom: var(--spacing-2xl);
+    color: var(--color-icon-muted, var(--color-text-tertiary));
+    background: var(--color-bg-secondary);
+    border-radius: 50%;
+    border: 1px solid var(--color-border-default);
 }
 
 .empty-state-icon svg {
-    width: 64px;
-    height: 64px;
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
 }
 
 .empty-state-title {
     font-size: var(--font-size-xl);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    letter-spacing: -0.01em;
 }
 
 .empty-state-description {
@@ -1129,6 +1143,7 @@ body {
     color: var(--color-text-secondary);
     max-width: 400px;
     line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
 }
 
 /* ================================================
@@ -1578,4 +1593,37 @@ body {
     .footer-text {
         font-size: var(--font-size-xs);
     }
+}
+
+/* ================================================
+   CUSTOM CURSOR
+   ================================================ */
+
+* {
+    cursor: none !important;
+}
+
+#cursor-dot {
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-accent-primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+    mix-blend-mode: exclusion;
+}
+
+/* Hover state on links/buttons */
+body.hovering #cursor-dot {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, var(--color-accent-primary), var(--color-accent-warning));
+    opacity: 1;
+    mix-blend-mode: normal;
+    border: 1px solid var(--color-text-primary);
 }

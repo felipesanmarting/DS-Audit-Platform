@@ -67,8 +67,8 @@ const translations = {
         analyzingTokens: 'Analizando tokens de diseño...',
 
         // Messages
-        noTokensFound: 'No se encontraron tokens',
-        tryAnalyzing: 'Intenta analizar una página o cambia a una categoría diferente',
+        noTokensFound: 'No encontramos tokens en esta categoría',
+        tryAnalyzing: 'Parece que esta página no utiliza estilos detectables para esta sección. Intenta cambiar de categoría o analiza una URL diferente.',
         noTokensToExport: 'No hay tokens para exportar. Por favor, analiza una página primero.',
         clearConfirm: '¿Estás seguro de que quieres borrar todos los tokens extraídos?',
         bookmarkletCopied: 'Código del bookmarklet copiado al portapapeles!\n\nAhora puedes:\n1. Crear un nuevo marcador\n2. Pegar este código como URL\n3. Hacer clic en el marcador en cualquier página para analizarla',
@@ -172,8 +172,8 @@ const translations = {
         analyzingTokens: 'Analyzing design tokens...',
 
         // Messages
-        noTokensFound: 'No tokens found',
-        tryAnalyzing: 'Try analyzing a page or switch to a different category',
+        noTokensFound: 'No tokens found in this category',
+        tryAnalyzing: 'It seems this page doesn\'t use detectable styles for this section. Try switching categories or analyze a different URL.',
         noTokensToExport: 'No tokens to export. Please analyze a page first.',
         clearConfirm: 'Are you sure you want to clear all extracted tokens?',
         bookmarkletCopied: 'Bookmarklet code copied to clipboard!\n\nYou can now:\n1. Create a new bookmark\n2. Paste this code as the URL\n3. Click the bookmark on any page to analyze it',
